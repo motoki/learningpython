@@ -1,0 +1,54 @@
+from typing import List
+# python 3.5より　Type Hintという機能が導入された。
+# 注釈として型を付与できる。
+
+class Solution:
+    def twosum(self, nums: List[int], target: int) -> List[int]:
+        ret = []
+        i = 0
+        while i < len(nums):
+            j = i + 1
+            while j < len(nums):
+                if (nums[i] + nums[j]) == target:
+                    ret =[i,j]
+                    return ret
+                j += 1
+            i += 1
+        ret
+    # in による探索
+    def twosum2(self, nums: List[int], target: int) -> List[int]:
+        i = 0
+        for v in nums:
+            if target - v in nums[i+1:]:
+                return [i, nums[i:].index(target - v) + i]
+            i += 1
+    # ハッシュテーブルで逆引き
+    def twosum3(self, nums: List[int], target: int) -> List[int]:
+        hash = {}
+        for i in range(len(nums)):
+            hash[nums[i]] = i
+        for i in range(len(nums)):
+            val = target-nums[i]
+            if val in hash:
+                key = hash[val]
+                if key != i:
+                   return [i, key]
+        return []
+    def twosum4(self, nums: List[int], target: int) -> List[int]:
+        hash = {}
+        for i, num in enumerate(nums):
+            val = target - num
+            if val in hash:
+                return ([hash[val], i])
+                break
+            hash[num] = i
+        return ([])
+def main():
+    solution = Solution()
+    #ret = solution.twosum([2, 7, 11, 15], 9)
+    #ret = solution.twosum2([2, 7, 11, 15], 9)
+    ret = solution.twosum3([2, 7, 11, 15], 9)
+    print(ret)
+
+if __name__ == "__main__":
+    main()
